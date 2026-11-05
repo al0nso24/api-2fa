@@ -1,5 +1,6 @@
 //AVANCE 1: crear el secreto que compartirán el servidor y el celular
 import { generateSecret, generate, verify } from "otplib";
+import { setTimeout as esperar } from 'node:timers/promises';
 
 const secreto = generateSecret();
 console.log("1. Secreto compartido: ", secreto);
