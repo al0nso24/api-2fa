@@ -23,3 +23,9 @@ titulo('1. El secreto compartido');
 const secreto = generateSecret();
 dato('Secreto', cian(secreto));
 nota('Lo guardan el servidor y el celular. No se vuelve a enviar.');
+
+//AVANCE 2: calcular el código de este momento
+titulo('2. El código de este momento');
+const codigo = await generate({ secret: secreto });
+digitos(codigo);
+nota('Se calculó con el secreto y la hora actual.');
