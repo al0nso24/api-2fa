@@ -26,3 +26,9 @@ const qrTexto = await QRCode.toString(uri, {
 });
 console.log(qrTexto);
 console.log('Apunta con la cámara de tu app autenticadora.');
+
+//AVANCE 3: guardar el mismo QR como imagen
+console.log('3. El QR como imagen');
+await QRCode.toFile('qr.png', uri, { width: 240 });
+console.log('Se creó el archivo qr.png');
+console.log('-> Una página web mostraría esta imagen.');
