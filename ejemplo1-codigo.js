@@ -17,21 +17,30 @@ const prueba2 = await verify({
 
 if (!prueba2.valid) console.log('123456 es incorrecto');
 
-//AVANCE 4: ver cómo se acaba el tiempo y cambia el código
-let restantes = 30 - (Math.floor(Date.now() / 1000) % 30);
 
-while (restantes > 0) {
-    console.log(` ${barra(restantes, 30)}
-String(restantes).padStart(2)} s`);
-    const pausa = Math.min(5, restantes);
-    await esperar(pausa * 1000);
-    restantes -= pausa;
+//Barra en tiempo real
+const secreto_2 = generateSecret();;
+const codigo_2 = await generate({ secret: secreto_2 });
+
+while (true) {
+    const restantes = 30 - (Math.floor(Date.now() / 1000) % 30);
+    console.log(`${'█'.repeat(restantes)}${'░'.repeat(30 - restantes)} ${restantes} s`);
+    if (restantes <= 5) break;
+    await esperar(5000);
 }
 
-await esperar(1000);
-const codigoNuevo = await generate({ secret: secreto });
-nota('Empezó una ventana nueva. Este es el código de ahora:');
-digitos(codigoNuevo);
+await esperar(30 - (Math.floor(Date.now() / 1000) % 30) === 30
+    ? 0
+    : (30 - (Math.floor(Date.now() / 1000) % 30)) * 1000);
 
-const prueba3 = await verify({ secret: secreto, token: codigo });
-if (!prueba3.valid) mal(`${codigo} ya venció`);
+const nuevo = await generate({ secret: secreto_2 });
+
+console.log('→ Empezó una ventana nueva. Este es el código de ahora:');
+console.log(`┌${'───┬'.repeat(5)}───┐`);
+console.log(`│ ${nuevo.split('').join(' │ ')} │`);
+console.log(`└${'───┴'.repeat(5)}───┘`);
+
+const resultado = await verify({ secret: secreto_2, token: codigo_2 });
+console.log(resultado.valid
+    ? `${codigo_2} todavía es válido`
+    : `${codigo_2} ya venció`);
